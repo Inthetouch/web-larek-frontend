@@ -42,10 +42,9 @@ yarn build
 ```
 ## Типы данных
 
-#### IProduct
+### IProduct
 
 ```
-
 export interface IProduct {
   id: string;
   title: string;
@@ -54,9 +53,113 @@ export interface IProduct {
   price: number | null;
   image: string;
 }
-
 ```
-###### Описание
+#### Описание
 Интерфейс описывает структуру объекта продукта. Используется для представления информации о продукте, включая идентификатор, название, описание, категорию, цену и изображение.
 
+### IBasket
+
 ```
+export interface IBasket {
+  id: string;
+  price: number;
+  total: number;
+  items: string[];
+}
+```
+
+#### Описание
+Интерфейс описывает структуру объекта корзины. Включает идентификатор корзины, общую цену, количество товаров и массив идентификаторов товаров, добавленных в корзину.
+
+### IOrderDelivery
+
+```
+export interface IOrderDelivery {
+  address: string;
+  payment: string;
+}
+```
+
+#### Описание
+Интерфейс описывает структуру данных доставки заказа. Содержит адрес доставки и информацию о способе оплаты.
+
+### IOrderContact
+
+```
+export interface IOrderContact {
+  email: string;
+  phone: string;
+}
+```
+
+#### Описание
+Интерфейс описывает структуру контактной информации для заказа. Включает email и номер телефона покупателя.
+
+### IOrderResult
+
+```
+export interface IOrderResult {
+  id: string;
+  total: number;
+}
+```
+
+#### Описание
+Интерфейс описывает структуру результата создания заказа. Содержит идентификатор заказа и общую сумму.
+
+### ApiResponse
+
+```
+export interface ApiResponse {
+  items: IProduct[];
+}
+```
+
+#### Описание
+Интерфейс описывает структуру ответа от API, который возвращает массив объектов типа IProduct.
+
+### IOrder
+
+```
+export interface IOrder {
+  contact: IOrderContact;
+  delivery: IOrderDelivery;
+  basket: IBasket;
+}
+```
+
+#### Описание
+Интерфейс описывает структуру данных заказа. Объединяет контактные данные, информацию о доставке и корзину с товарами.
+
+### IProductView
+
+```
+export interface IProductView {
+  render(product: IProduct): void;
+}
+```
+
+#### Описание
+Интерфейс для компонента отображения продукта. Включает метод render, который принимает объект IProduct и отображает его.
+
+### IBasketView
+
+```
+export interface IBasketView {
+  render(basket: IBasket): void;
+}
+```
+
+#### Описание
+Интерфейс для компонента отображения корзины. Включает метод render, который принимает объект IBasket и отображает его.
+
+### IOrderView
+
+```
+export interface IOrderView {
+  render(order: IOrder): void;
+}
+```
+
+#### Описание
+Интерфейс для компонента отображения заказа. Включает метод render, который принимает объект IOrder и отображает его.
