@@ -40,5 +40,23 @@ npm run build
 ```
 yarn build
 ```
-## Модель данных
+## Типы данных
 
+# IProduct
+
+```
+
+export interface IProduct {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  price: number | null;
+  image: string;
+}
+
+```
+
+Интерфейс описывает структуру объекта продукта. Используется для представления информации о продукте, включая идентификатор, название, описание, категорию, цену и изображение.
+
+```

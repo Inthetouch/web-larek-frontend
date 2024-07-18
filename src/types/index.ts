@@ -32,3 +32,21 @@ export interface IOrderResult {
 export interface ApiResponse {
   items: IProduct[];
 }
+
+export interface IOrder {
+  contact: IOrderContact;
+  delivery: IOrderDelivery;
+  basket: IBasket;
+}
+
+export interface IProductView {
+  render(product: IProduct): void;
+}
+
+export interface IBasketView {
+  render(basket: IBasket): void;
+}
+
+export interface IOrderView {
+  render(order: IOrder): void;
+}
