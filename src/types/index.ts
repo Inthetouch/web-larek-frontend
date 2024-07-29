@@ -1,17 +1,17 @@
 export interface IProduct {
-  id: string;
+  _id: string;
+  category: string;
   title: string;
   description: string;
-  category: string;
   price: number | null;
   image: string;
 }
 
 export interface IBasket {
-  id: string;
+  _id: string;
+  items: string[];
   price: number;
   total: number;
-  items: string[];
 }
 
 export interface IOrderDelivery {
@@ -25,28 +25,12 @@ export interface IOrderContact {
 }
 
 export interface IOrderResult {
-  id: string;
+  _id: string;
+  image: string;
   total: number;
 }
 
-export interface ApiResponse {
-  items: IProduct[];
-}
-
-export interface IOrder {
-  contact: IOrderContact;
-  delivery: IOrderDelivery;
-  basket: IBasket;
-}
-
-export interface IProductView {
-  render(product: IProduct): void;
-}
-
-export interface IBasketView {
-  render(basket: IBasket): void;
-}
-
-export interface IOrderView {
-  render(order: IOrder): void;
+export interface ICardsData {
+  cards: IProduct[];
+  preview: string | null;
 }

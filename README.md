@@ -11,7 +11,7 @@
 - src/pages/index.html — HTML-файл главной страницы
 - src/types/index.ts — файл с типами
 - src/index.ts — точка входа приложения
-- src/styles/styles.scss — корневой файл стилей
+- src/scss/styles.scss — корневой файл стилей
 - src/utils/constants.ts — файл с константами
 - src/utils/utils.ts — файл с утилитами
 
@@ -40,16 +40,16 @@ npm run build
 ```
 yarn build
 ```
-## Типы данных
+## Данные и типы данных, используемые в приложении
 
 ### IProduct
 Интерфейс описывает структуру объекта продукта. Используется для представления информации о продукте, включая идентификатор, название, описание, категорию, цену и изображение.
 ```
 export interface IProduct {
-  id: string;
+  _id: string;
+  category: string;
   title: string;
   description: string;
-  category: string;
   price: number | null;
   image: string;
 }
@@ -60,9 +60,9 @@ export interface IProduct {
 ```
 export interface IBasket {
   id: string;
+  items: string[];
   price: number;
   total: number;
-  items: string[];
 }
 ```
 
@@ -88,49 +88,18 @@ export interface IOrderContact {
 Интерфейс описывает структуру результата создания заказа. Содержит идентификатор заказа и общую сумму.
 ```
 export interface IOrderResult {
-  id: string;
+  _id: string;
+  image: string;
   total: number;
 }
 ```
 
-### ApiResponse
-Интерфейс описывает структуру ответа от API, который возвращает массив объектов типа IProduct.
+### ICardsData
+Интерфейс описывает структуру карточек. Включая в себя просмотр карточки.
 ```
-export interface ApiResponse {
-  items: IProduct[];
+export interface ICardsData {
+  cards: IProduct[];
+  preview: string | null;
 }
 ```
 
-### IOrder
-Интерфейс описывает структуру данных заказа. Объединяет контактные данные, информацию о доставке и корзину с товарами.
-```
-export interface IOrder {
-  contact: IOrderContact;
-  delivery: IOrderDelivery;
-  basket: IBasket;
-}
-```
-
-### IProductView
-Интерфейс для компонента отображения продукта. Включает метод render, который принимает объект IProduct и отображает его.
-```
-export interface IProductView {
-  render(product: IProduct): void;
-}
-```
-
-### IBasketView
-Интерфейс для компонента отображения корзины. Включает метод render, который принимает объект IBasket и отображает его.
-```
-export interface IBasketView {
-  render(basket: IBasket): void;
-}
-```
-
-### IOrderView
-Интерфейс для компонента отображения заказа. Включает метод render, который принимает объект IOrder и отображает его.
-```
-export interface IOrderView {
-  render(order: IOrder): void;
-}
-```
