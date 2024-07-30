@@ -14,12 +14,9 @@ export interface IBasket {
   total: number;
 }
 
-export interface IOrderDelivery {
+export interface IUserInfo {
   address: string;
   payment: string;
-}
-
-export interface IOrderContact {
   email: string;
   phone: string;
 }
@@ -30,7 +27,16 @@ export interface IOrderResult {
   total: number;
 }
 
-export interface ICardsData {
+export interface IProductData {
   cards: IProduct[];
   preview: string | null;
+  addCard(card: IProduct): void;
+  deleteCard(cardId: string, payload:Function | null): void;
+  updateCard(cardId: IProduct, payload:Function | null): void;
+  getCard(cardId: string): IProduct;
+}
+
+export interface IUserData {
+  setUserInfo(userData: IUserInfo): void;
+  checkUserInfo(data: Record<keyof IUserInfo, string>): boolean;
 }
