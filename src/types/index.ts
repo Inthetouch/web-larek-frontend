@@ -1,17 +1,19 @@
+import { IEvents } from "../components/base/events";
+
 export interface IProduct {
-  _id: string;
-  category: string;
-  title: string;
+  id: string;
   description: string;
-  price: number | null;
   image: string;
+  title: string;
+  category: string;
+  price: number | null;
 }
 
 export interface IBasket {
-  _id: string;
-  items: string[];
-  price: number;
-  total: number;
+  addProduct(product: IProduct): void;
+  removeProduct(productId: string): void;
+  getProducts(): IProduct[];
+  getTotalPrice(): number;
 }
 
 export interface IUserInfo {
@@ -22,21 +24,19 @@ export interface IUserInfo {
 }
 
 export interface IOrderResult {
-  _id: string;
+  id: string;
   image: string;
   total: number;
 }
 
 export interface IProductData {
-  cards: IProduct[];
   preview: string | null;
-  addCard(card: IProduct): void;
-  deleteCard(cardId: string, payload:Function | null): void;
-  updateCard(cardId: IProduct, payload:Function | null): void;
-  getCard(cardId: string): IProduct;
+  addProduct(product: IProduct): void;
+  getProduct(productId: string): IProduct;
+  deleteProduct(productId: string ): boolean;
 }
 
 export interface IUserData {
-  setUserInfo(userData: IUserInfo): void;
-  checkUserInfo(data: Record<keyof IUserInfo, string>): boolean;
+  saveUserInfo(userData: IUserInfo): void;
+  checkUserInfo(userData: IUserInfo): boolean;
 }
