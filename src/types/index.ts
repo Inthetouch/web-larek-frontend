@@ -1,5 +1,4 @@
 import { ApiPostMethods } from "../components/base/api";
-import { IEvents } from "../components/base/events";
 
 export interface IProduct {
   id: string;
@@ -25,9 +24,13 @@ export interface IUserInfo {
 }
 
 export interface IOrderResult {
-  id: string;
-  image: string;
+  items: string[];
   total: number;
+  image: string;
+  payment?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
 }
 
 export interface IProductData {
@@ -40,4 +43,9 @@ export interface IProductData {
 export interface IUserData {
   saveUserInfo(userData: IUserInfo): void;
   checkUserInfo(userData: IUserInfo): boolean;
+}
+
+export interface IApi {
+  get<T>(url: string): Promise<T>;
+  post<T>(url:string, data:object, method?: ApiPostMethods): Promise<T>;
 }

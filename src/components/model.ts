@@ -1,6 +1,6 @@
-import { IProduct, IProductData, IBasket, IUserData, IUserInfo } from "../types/index"
+import { IProduct, IProductData, IBasket, IUserData, IUserInfo, IOrderResult } from "../types/index"
 import { IEvents } from "./base/events";
-import { format, validate } from "validate.js";
+import { validate } from "validate.js";
 
 export class ProductData implements IProductData {
     protected _products: IProduct[] = [];
@@ -48,6 +48,7 @@ export class ProductData implements IProductData {
 export class Basket implements IBasket {
     protected events: IEvents;
     protected products: IProduct[] = [];
+    protected allSum: number = 0;
 
     constructor(events: IEvents) {
         this.events = events;
@@ -55,6 +56,7 @@ export class Basket implements IBasket {
 
     addProduct(product: IProduct): void {
         this.products.push(product);
+        this.updateTotalSum();
     }
 
     removeProduct(productId: string): void {
@@ -69,6 +71,10 @@ export class Basket implements IBasket {
         return this.products.reduce((total, product) => {
             return total + (product.price || 0);
         }, 0);
+    }
+    
+    private updateTotalSum(): void {
+        this.allSum = this.getTotalPrice();
     }
 }
 
