@@ -1,3 +1,4 @@
+import { ApiPostMethods } from "../components/base/api";
 import { IEvents } from "../components/base/events";
 
 export interface IProduct {

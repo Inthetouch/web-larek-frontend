@@ -1,5 +1,5 @@
-import { IProduct, IProductData, IBasket, IUserData, IUserInfo } from "../../types"
-import { IEvents } from "./events";
+import { IProduct, IProductData, IBasket, IUserData, IUserInfo } from "../types/index"
+import { IEvents } from "./base/events";
 import { format, validate } from "validate.js";
 
 export class ProductData implements IProductData {
