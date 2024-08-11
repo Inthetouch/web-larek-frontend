@@ -1,6 +1,7 @@
 import { IProduct, IProductData, IBasket, IUserData, IUserInfo, IOrderResult } from "../types/index"
 import { IEvents } from "./base/events";
 import { validate } from "validate.js";
+import { constraints } from "../utils/constants"
 
 export class ProductData implements IProductData {
     protected _products: IProduct[] = [];
@@ -18,6 +19,10 @@ export class ProductData implements IProductData {
             this._products.push(product);
         }
         this.events.emit('product:add'); 
+    }
+
+    get returnProducts() {
+        return this._products;
     }
 
     getProduct(productId: string) {
@@ -107,33 +112,11 @@ export class UserData implements IUserData {
     }
 
     checkUserInfo(userData: IUserInfo): boolean {
-        const validationResult = validate(userData, this.constraints);
+        const validationResult = validate(userData, constraints);
         if (validationResult) {
             console.error('Ошибка валидации', validationResult);
             return false;
         }
         return true;
     }
-
-    private constraints = {
-        address: {
-            presence: { message: '^Поле адреса не может быть пустым', allowEmpty: false },
-            length: { minimum: 6 }
-        },
-        email: {
-            presence: { message: '^Поле email не может быть пустым', allowEmpty: false },
-            email: {message: '^Введите корректный email адрес'}
-        },
-        payment: {
-            presence: { message: '^Поле оплаты не может быть пустым', allowEmpty: false },
-            inclusion: { within: ['online', 'offline'], message: "^%{value} — недопустимый способ оплаты" }
-        },
-        phone: {
-            presence: { message: '^Поле телефона не может быть пустым', allowEmpty: false },
-            format: {
-                pattern: /^\+?[1-9]\d{1,14}$/,
-                message: "^%{value} — не верный номер телефона"
-            }
-        }
-    };
 }

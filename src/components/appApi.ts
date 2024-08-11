@@ -1,4 +1,4 @@
-import { IApi, IProduct, IOrderResult } from "../types";
+import { IApi, IProduct, IOrderResult, IServerResponse } from "../types";
 
 
 export class AppApi {
@@ -9,10 +9,19 @@ export class AppApi {
     }
 
     getProducts(): Promise<IProduct[]> {
-        return this._baseUrl.get<IProduct[]>('/product').then((products: IProduct[]) => products)
+        return this._baseUrl.get<IServerResponse>('/product')
+            .then((products: IServerResponse) => {
+                return products.items;
+            })
     }
 
     postBasket(data: IOrderResult): Promise<void> {
-        return this._baseUrl.post<void>('/order', data).then(() => { console.log('Success') }).catch((error) => { console.error('Error', error);})
+        return this._baseUrl.post<void>('/order', data)
+            .then(() => { 
+                console.log('Success') 
+            })
+            .catch((error) => {
+                console.error('Error', error)
+            });
     }
 }

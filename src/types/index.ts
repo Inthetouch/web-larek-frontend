@@ -26,11 +26,16 @@ export interface IUserInfo {
 export interface IOrderResult {
   items: string[];
   total: number;
-  image: string;
   payment?: string;
   email?: string;
   phone?: string;
   address?: string;
+  image: string;
+}
+
+export interface IServerResponse {
+  total: number;
+  items: IProduct[];
 }
 
 export interface IProductData {
