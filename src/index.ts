@@ -120,10 +120,7 @@ const testSection = document.querySelector('.gallery');
 
 const product = new Product(prodTemplate, events);
 
-product.setID(oneProduct)
-console.log(product.getID());
-
-testSection.append(product.render())
+testSection.append(product.render(oneProduct));
 
 events.onAll((event) => {
 	console.log(event.eventName, event.data);

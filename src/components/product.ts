@@ -9,7 +9,8 @@ export class Product {
     protected productTitle: HTMLElement;
     protected productPrice: HTMLElement;
     protected productCategory: HTMLElement;
-    protected productBuyButton: HTMLButtonElement | null; 
+    protected productBuyButton: HTMLButtonElement | null;
+    protected productDescription: HTMLElement;
     protected productId: string;
 
     constructor(template: HTMLTemplateElement, events: IEvents) {
@@ -19,8 +20,9 @@ export class Product {
         this.productImage = this.element.querySelector('.card__image');
         this.productTitle = this.element.querySelector('.card__title');
         this.productPrice = this.element.querySelector('.card__price');
-        this.productCategory = this.element.querySelector('.card_category');
-        this.productBuyButton = this.element.querySelector('.card__button')
+        this.productDescription = this.element.querySelector('.card__text') || null;
+        this.productCategory = this.element.querySelector('.card__category');
+        this.productBuyButton = this.element.querySelector('.card__button');
 
         this.productImage.addEventListener('click', () => {
             this.events.emit('product:selected', { product: this });
@@ -31,15 +33,35 @@ export class Product {
         })
     }
 
-    setID(prodId: IProduct) {
-        this.productId = prodId.id;
-    }
-
-    getID() {
-        return this.productId;
-    }
-
-    render() {
+    render(productData: Partial<IProduct>) {
+        Object.assign(this, productData);
         return this.element;
     }
+
+    set id (id: string) {
+        this.productId = id;
+    }
+
+    set description (description: string) {
+        if(this.productDescription !== null){
+            this.productDescription.textContent = description;
+        }
+    }
+
+    set image (image: string) {
+        this.productImage.style.backgroundImage = `url(${image})`;
+    }
+
+    set title (title:string) {
+        this.productTitle.textContent = title;
+    }
+    
+    set category (category: string) {
+        this.productCategory.textContent = category;
+    }
+
+    set price (price: number | string) {
+        this.productPrice.textContent = price.toString();
+    }
+
 }
