@@ -6,6 +6,7 @@ import { AppApi } from './components/appApi';
 import { ProductData } from './components/model';
 import './scss/styles.scss';
 import { Product } from './components/product';
+import { ProductConteiner } from './components/productContainer';
 
 const events = new EventEmitter();
 
@@ -106,22 +107,26 @@ const allProduct = [
   }
 ]
 
-api.getProducts()
-    .then((products) => {
-        listProduct.addProduct(products);
-        //console.log(listProduct.returnProducts)
-    })
-
-
-
-
-const prodTemplate:HTMLTemplateElement = document.querySelector('#card-catalog'); 
-const testSection = document.querySelector('.gallery');
-
-const product = new Product(prodTemplate, events);
-
-testSection.append(product.render(oneProduct));
+// api.getProducts()
+//     .then((products) => {
+//         listProduct.addProduct(products);
+//         console.log(listProduct.returnProducts)
+//     })
 
 events.onAll((event) => {
-	console.log(event.eventName, event.data);
+    console.log(event.eventName, event.data);
 })
+
+const prodTemplate:HTMLTemplateElement = document.querySelector('#card-catalog'); 
+const productContainer = new ProductConteiner(document.querySelector('.gallery'));
+
+const product = new Product(prodTemplate, events);
+const product1 = new Product(prodTemplate, events);
+
+const arr = [];
+
+arr.push(product.render(allProduct[0]));
+arr.push(product1.render(allProduct[1]));
+
+
+productContainer.render({catalog:arr});
