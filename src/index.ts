@@ -107,11 +107,11 @@ const allProduct = [
   }
 ]
 
-// api.getProducts()
-//     .then((products) => {
-//         listProduct.addProduct(products);
-//         console.log(listProduct.returnProducts)
-//     })
+api.getProducts()
+    .then((products) => {
+        listProduct.addProduct(products);
+        console.log(listProduct.returnProducts)
+    })
 
 events.onAll((event) => {
     console.log(event.eventName, event.data);
