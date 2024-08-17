@@ -7,6 +7,7 @@ import { ProductData } from './components/model';
 import './scss/styles.scss';
 import { Product } from './components/product';
 import { ProductConteiner } from './components/productContainer';
+import { cloneTemplate } from "./utils/utils";
 
 const events = new EventEmitter();
 
@@ -14,15 +15,6 @@ const baseApi: IApi = new Api(API_URL, settings);
 const api = new AppApi(baseApi);
 
 const listProduct = new ProductData(events);
-
-const oneProduct = {
-	"id": "c101ab44-ed99-4a54-990d-47aa2bb4e7d9",
-	"description": "Лизните этот леденец, чтобы мгновенно запоминать и узнавать любой цветовой код CSS.",
-	"image": "/Shell.svg",
-	"title": "HEX-леденец",
-	"category": "другое",
-	"price": 1450
-}
 
 const allProduct = [
   {
@@ -110,7 +102,7 @@ const allProduct = [
 api.getProducts()
     .then((products) => {
         listProduct.addProduct(products);
-        console.log(listProduct.returnProducts)
+        //console.log(listProduct.returnProducts)
     })
 
 events.onAll((event) => {
@@ -120,13 +112,12 @@ events.onAll((event) => {
 const prodTemplate:HTMLTemplateElement = document.querySelector('#card-catalog'); 
 const productContainer = new ProductConteiner(document.querySelector('.gallery'));
 
-const product = new Product(prodTemplate, events);
-const product1 = new Product(prodTemplate, events);
+const product = new Product(cloneTemplate(prodTemplate), events);
+const product1 = new Product(cloneTemplate(prodTemplate), events);
 
 const arr = [];
 
 arr.push(product.render(allProduct[0]));
 arr.push(product1.render(allProduct[1]));
-
 
 productContainer.render({catalog:arr});

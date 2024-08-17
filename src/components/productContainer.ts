@@ -1,20 +1,16 @@
+import { Component } from "./base/component";
+
 interface IProductContainer {
     catalog: HTMLElement[];
 }
 
-export class ProductConteiner {
-    protected container: HTMLElement;
+export class ProductConteiner extends Component<IProductContainer> {
 
-    constructor(container: HTMLElement) {
-        this.container = container;
+    constructor(protected container: HTMLElement) {
+        super(container);
     }
 
     set catalog(items: HTMLElement[]) {
         this.container.replaceChildren(...items);
-    }
-
-    render(data: Partial<IProductContainer>) {
-        Object.assign(this, data);
-        return this.container;
     }
 }

@@ -1,9 +1,9 @@
 import { IProduct } from "../types";
-import { cloneTemplate } from "../utils/utils";
+
+import { Component } from "./base/component";
 import { IEvents } from "./base/events";
 
-export class Product {
-    protected element: HTMLElement;
+export class Product extends Component<IProduct>{
     protected events: IEvents;
     protected productImage: HTMLDivElement;
     protected productTitle: HTMLElement;
@@ -13,16 +13,17 @@ export class Product {
     protected productDescription: HTMLElement;
     protected productId: string;
 
-    constructor(template: HTMLTemplateElement, events: IEvents) {
-        this.events = events;
-        this.element = cloneTemplate(template);
+    constructor(protected container: HTMLElement, events: IEvents) {
+        
+        super(container);
 
-        this.productImage = this.element.querySelector('.card__image');
-        this.productTitle = this.element.querySelector('.card__title');
-        this.productPrice = this.element.querySelector('.card__price');
-        this.productDescription = this.element.querySelector('.card__text') || null;
-        this.productCategory = this.element.querySelector('.card__category');
-        this.productBuyButton = this.element.querySelector('.card__button');
+        this.events = events;
+        this.productImage = this.container.querySelector('.card__image');
+        this.productTitle = this.container.querySelector('.card__title');
+        this.productPrice = this.container.querySelector('.card__price');
+        this.productDescription = this.container.querySelector('.card__text') || null;
+        this.productCategory = this.container.querySelector('.card__category');
+        this.productBuyButton = this.container.querySelector('.card__button');
 
         this.productImage.addEventListener('click', () => {
             this.events.emit('product:selected', { product: this });
@@ -31,11 +32,6 @@ export class Product {
         this.productBuyButton?.addEventListener('click', () => {
             this.events.emit('product:add', { product: this });
         })
-    }
-
-    render(productData: Partial<IProduct>) {
-        Object.assign(this, productData);
-        return this.element;
     }
 
     set id (id: string) {
