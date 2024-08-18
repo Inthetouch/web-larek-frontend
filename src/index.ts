@@ -99,15 +99,15 @@ const allProduct = [
   }
 ]
 
+events.onAll((event) => {
+    console.log(event.eventName, event.data);
+})
+
 api.getProducts()
     .then((products) => {
         listProduct.addProduct(products);
         //console.log(listProduct.returnProducts)
     })
-
-events.onAll((event) => {
-    console.log(event.eventName, event.data);
-})
 
 const prodTemplate:HTMLTemplateElement = document.querySelector('#card-catalog'); 
 const productContainer = new ProductConteiner(document.querySelector('.gallery'));
