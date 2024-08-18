@@ -4,13 +4,12 @@ import { EventEmitter, IEvents } from './components/base/events';
 import { API_URL, settings } from './utils/constants';
 import { AppApi } from './components/appApi';
 import { ProductData } from './components/model';
-import './scss/styles.scss';
 import { Product } from './components/product';
 import { ProductConteiner } from './components/productContainer';
 import { cloneTemplate } from "./utils/utils";
+import './scss/styles.scss';
 
 const events = new EventEmitter();
-
 const baseApi: IApi = new Api(API_URL, settings);
 const api = new AppApi(baseApi);
 const productsArray = new ProductData(events);
