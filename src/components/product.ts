@@ -55,8 +55,12 @@ export class Product extends Component<IProduct>{
         this.productCategory.textContent = category;
     }
 
-    set price (price: number | string) {
-        this.productPrice.textContent = price.toString();
+    set price (price: string | null ) {
+        if(price !== null){
+            this.productPrice.textContent = `${price.toLocaleString()} синапсов`;
+        } else {
+            this.productPrice.textContent = 'Бесценно';
+        }
     }
 
 }

@@ -13,8 +13,9 @@ const events = new EventEmitter();
 
 const baseApi: IApi = new Api(API_URL, settings);
 const api = new AppApi(baseApi);
-
-const listProduct = new ProductData(events);
+const productsArray = new ProductData(events);
+const productTemplate:HTMLTemplateElement = document.querySelector('#card-catalog'); 
+const productContainer = new ProductConteiner(document.querySelector('.gallery'));
 
 const allProduct = [
   {
@@ -105,19 +106,21 @@ events.onAll((event) => {
 
 api.getProducts()
     .then((products) => {
-        listProduct.addProduct(products);
-        //console.log(listProduct.returnProducts)
+        productsArray.addProduct(products);
+        events.emit('products:loaded');
+    })
+    .catch((error) => {
+        console.error(`Ошибка: ${error}`);
     })
 
-const prodTemplate:HTMLTemplateElement = document.querySelector('#card-catalog'); 
-const productContainer = new ProductConteiner(document.querySelector('.gallery'));
 
-const product = new Product(cloneTemplate(prodTemplate), events);
-const product1 = new Product(cloneTemplate(prodTemplate), events);
 
-const arr = [];
+//Описание фукнкции - слушателя по event
+events.on('products:loaded', () => {
+    const productArray = productsArray.returnProducts.map((product) => {
+        const productInstance = new Product(cloneTemplate(productTemplate), events);
+        return productInstance.render(product);
+    });
 
-arr.push(product.render(allProduct[0]));
-arr.push(product1.render(allProduct[1]));
-
-productContainer.render({catalog:arr});
+    productContainer.render({catalog: productArray});
+});
