@@ -15,6 +15,8 @@ const api = new AppApi(baseApi);
 const productsArray = new ProductData(events);
 const productTemplate:HTMLTemplateElement = document.querySelector('#card-catalog'); 
 const productContainer = new ProductConteiner(document.querySelector('.gallery'));
+const productPreview:HTMLTemplateElement = document.querySelector('#card-preview');
+
 
 events.onAll((event) => {
     console.log(event.eventName, event.data);
@@ -24,6 +26,7 @@ api.getProducts()
     .then((products) => {
         productsArray.addProduct(products);
         events.emit('products:loaded');
+
     })
     .catch((error) => {
         console.error(`Ошибка: ${error}`);
@@ -40,3 +43,4 @@ events.on('products:loaded', () => {
 
     productContainer.render({catalog: productArray});
 });
+

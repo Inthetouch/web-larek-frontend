@@ -4,7 +4,7 @@ import { IEvents } from "./base/events";
 
 export class Product extends Component<IProduct>{
     protected events: IEvents;
-    protected productImage: HTMLDivElement;
+    protected productImage: HTMLImageElement;
     protected productTitle: HTMLElement;
     protected productPrice: HTMLElement;
     protected productCategory: HTMLElement;
@@ -25,7 +25,7 @@ export class Product extends Component<IProduct>{
         this.productBuyButton = this.container.querySelector('.card__button');
 
         this.productImage.addEventListener('click', () => {
-            this.events.emit('product:selected', { product: this });
+            this.events.emit('product:select', { product: this });
         })
 
         this.productBuyButton?.addEventListener('click', () => {
@@ -44,7 +44,8 @@ export class Product extends Component<IProduct>{
     }
 
     set image (image: string) {
-        this.productImage.style.backgroundImage = `url(${image})`;
+        this.productImage.style.backgroundImage = `${image}`;
+        //this.productImage.src = `./images${image}`;
     }
 
     set title (title:string) {
