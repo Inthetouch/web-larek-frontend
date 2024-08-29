@@ -4,7 +4,12 @@ import { Modal } from "./base/modal";
 
 interface IModalProduct {
     product: {
-        
+        productImage: string;
+        productTitle: string;
+        productPrice: string;
+        productDescription: string;
+        productCategory: string;
+        productId: string;
     }
 }
 
@@ -32,6 +37,13 @@ export class ModalProduct extends Modal<IModalProduct> {
         })
     }
 
-    set product ({})
+    product ({ product }: IModalProduct) {
+        this.productImage.style.backgroundImage = `${product.productImage}`;
+        this.productTitle.textContent = product.productTitle;
+        this.productPrice.textContent = product.productPrice;
+        this.productCategory.textContent = product.productCategory;
+        this.productDescription.textContent = product.productDescription;
+        super.open();
+    }
 }
 
