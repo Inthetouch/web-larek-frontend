@@ -8,6 +8,7 @@ import { Product } from './components/product';
 import { ProductConteiner } from './components/productContainer';
 import { cloneTemplate } from "./utils/utils";
 import './scss/styles.scss';
+import { Modal } from './components/base/modal';
 
 const events = new EventEmitter();
 const baseApi: IApi = new Api(API_URL, settings);
@@ -15,8 +16,7 @@ const api = new AppApi(baseApi);
 const productsArray = new ProductData(events);
 const productTemplate:HTMLTemplateElement = document.querySelector('#card-catalog'); 
 const productContainer = new ProductConteiner(document.querySelector('.gallery'));
-const productPreview:HTMLTemplateElement = document.querySelector('#card-preview');
-
+const productModal = new Modal(document.querySelector('#modal-container'), events);
 
 events.onAll((event) => {
     console.log(event.eventName, event.data);
@@ -32,8 +32,6 @@ api.getProducts()
         console.error(`Ошибка: ${error}`);
     })
 
-
-
 //Описание фукнкции - слушателя по event
 events.on('products:loaded', () => {
     const productArray = productsArray.returnProducts.map((product) => {
@@ -44,3 +42,7 @@ events.on('products:loaded', () => {
     productContainer.render({catalog: productArray});
 });
 
+
+events.on('product:select', (product) => {
+    productModal.open();
+})

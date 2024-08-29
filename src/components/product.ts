@@ -8,7 +8,6 @@ export class Product extends Component<IProduct>{
     protected productTitle: HTMLElement;
     protected productPrice: HTMLElement;
     protected productCategory: HTMLElement;
-    protected productBuyButton: HTMLButtonElement | null;
     protected productDescription: HTMLElement;
     protected productId: string;
 
@@ -22,14 +21,9 @@ export class Product extends Component<IProduct>{
         this.productPrice = this.container.querySelector('.card__price');
         this.productDescription = this.container.querySelector('.card__text') || null;
         this.productCategory = this.container.querySelector('.card__category');
-        this.productBuyButton = this.container.querySelector('.card__button');
 
         this.productImage.addEventListener('click', () => {
             this.events.emit('product:select', { product: this });
-        })
-
-        this.productBuyButton?.addEventListener('click', () => {
-            this.events.emit('product:add', { product: this });
         })
     }
 
