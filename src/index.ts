@@ -10,10 +10,19 @@ import { cloneTemplate } from "./utils/utils";
 import { ModalProduct } from './components/modalProduct';
 import './scss/styles.scss';
 
+export interface IModalProduct {
+    productImage: string;
+    productTitle: string;
+    productPrice: string;
+    productCategory: string;
+    productDescription: string;
+    productId: string;
+}
+
 const events = new EventEmitter();
 const baseApi: IApi = new Api(API_URL, settings);
 const api = new AppApi(baseApi);
-const productsArray = new ProductData(events);
+const productsData = new ProductData(events);
 const productTemplate:HTMLTemplateElement = document.querySelector('#card-catalog'); 
 const productContainer = new ProductConteiner(document.querySelector('.gallery'));
 const productModal = new ModalProduct(document.querySelector('#modal-container'), events);
@@ -24,7 +33,7 @@ events.onAll((event) => {
 
 api.getProducts()
     .then((products) => {
-        productsArray.addProduct(products);
+        productsData.addProduct(products);
         events.emit('products:loaded');
 
     })
@@ -34,7 +43,7 @@ api.getProducts()
 
 //Описание фукнкции - слушателя по event
 events.on('products:loaded', () => {
-    const productArray = productsArray.returnProducts.map((product) => {
+    const productArray = productsData.returnProducts.map((product) => {
         const productInstance = new Product(cloneTemplate(productTemplate), events);
         return productInstance.render(product);
     });
@@ -42,7 +51,10 @@ events.on('products:loaded', () => {
     productContainer.render({catalog: productArray});
 });
 
-events.on('product:select', (data: { product: Product }) => {
-    const { product } = data;
-    console.log({ product });
+events.on('product:select', (data: { products: IModalProduct }) => {
+    const { products } = data;
+    console.log({ products });
+    //const { id, image, title, price, category, description } = productsData.getProduct(products.productId);
+    //const product = { id, image, title, price, category, description };
+    //productModal.render({ product });
 })

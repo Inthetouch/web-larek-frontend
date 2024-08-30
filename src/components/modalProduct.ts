@@ -1,15 +1,13 @@
-import { IProduct } from "../types";
 import { IEvents } from "./base/events";
 import { Modal } from "./base/modal";
 
 interface IModalProduct {
     product: {
-        productImage: string;
-        productTitle: string;
-        productPrice: string;
-        productDescription: string;
-        productCategory: string;
-        productId: string;
+        image: string;
+        title: string;
+        price: number;
+        category: string;
+        description: string;
     }
 }
 
@@ -37,12 +35,12 @@ export class ModalProduct extends Modal<IModalProduct> {
         })
     }
 
-    product ({ product }: IModalProduct) {
-        this.productImage.style.backgroundImage = `${product.productImage}`;
-        this.productTitle.textContent = product.productTitle;
-        this.productPrice.textContent = product.productPrice;
-        this.productCategory.textContent = product.productCategory;
-        this.productDescription.textContent = product.productDescription;
+    set product({ product }: IModalProduct) {
+        this.productImage.src = product.image;
+        this.productTitle.textContent = product.title;
+        this.productPrice.textContent = product.price.toString();
+        this.productCategory.textContent = product.category;
+        this.productDescription.textContent = product.description;
         super.open();
     }
 }
