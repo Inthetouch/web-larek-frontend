@@ -9,7 +9,7 @@ export class Product extends Component<IProduct>{
     protected productPrice: HTMLElement;
     protected productCategory: HTMLElement;
     protected productDescription: HTMLElement;
-    protected productId: string;
+    public productId: string;
 
     constructor(protected container: HTMLElement, events: IEvents) {
         

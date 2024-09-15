@@ -26,7 +26,7 @@ export class ProductData implements IProductData {
     }
 
     getProduct(productId: string) {
-        return this._products.find(item => item.id = productId);
+        return this._products.find(item => item.id === productId);
     }
 
     deleteProduct(productId: string): boolean {
